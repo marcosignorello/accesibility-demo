@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Translations } from "./types/Translations.type";
 import {
   AriaAttribute,
-  AriaAttributesContentType,
 } from "./types/AriaAttributestypes";
 import { ariaAttributesContent } from "./aria-attributes/data";
 
@@ -31,10 +30,10 @@ const translations: Translations = {
 const AriaGuide = () => {
   const [selectedAttribute, setSelectedAttribute] =
     useState<AriaAttribute | null>(null);
-  const [language, setLanguage] = useState("es");
+  const [language, setLanguage] = useState<string>("es");
 
   const t = translations[language];
-  const attributes: AriaAttribute[] = ariaAttributesContent[language];
+  const attributes = ariaAttributesContent[language as keyof typeof ariaAttributesContent] ?? [];
 
   return (
     <div className="flex h-screen bg-gray-100">

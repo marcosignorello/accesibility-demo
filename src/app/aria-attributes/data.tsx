@@ -1,5 +1,9 @@
-export const ariaAttributesContent = {
-  en: [
+import {
+  AriaAttributesContentType,
+} from "../types/AriaAttributestypes";
+
+export const ariaAttributesContent: AriaAttributesContentType = {
+  'en': [
     {
       name: "aria-label",
       description:
