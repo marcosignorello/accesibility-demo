@@ -1,4 +1,4 @@
-type TranslationStrings = {
+export type TranslationStrings = {
   title: string;
   selectAttribute: string;
   description: string;
@@ -6,6 +6,10 @@ type TranslationStrings = {
   importance: string;
   example: string;
   languageSelector: string;
+  withAttribute: string;
+  codeExample: string;
+  liveDemo: string;
+  withoutAttribute: string;
 };
 
 export type Translations = {
