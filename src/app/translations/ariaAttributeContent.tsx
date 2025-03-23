@@ -1,15 +1,24 @@
-import React from "react";
 import { AriaAttributesContentType } from "../types/AriaAttributestypes";
-import { CondimentSelector } from "../aria-attributes-widgets/aria-checked/with";
-import { CondimentSelector as CondimentSelectorWithout } from "../aria-attributes-widgets/aria-checked/without";
+import { withAriaCheckedWidget } from "../aria-attributes-widgets/aria-checked/with";
+import { withoutAriaCheckedWidget } from "../aria-attributes-widgets/aria-checked/without";
 import { withLabelledByWidget } from "../aria-attributes-widgets/aria-labelledby/with";
 import { withoutLabelledByWidget } from "../aria-attributes-widgets/aria-labelledby/without";
 import { withDescribedByWidget } from "../aria-attributes-widgets/aria-describedby/with";
 import { withoutDescribedByWidget } from "../aria-attributes-widgets/aria-describedby/without";
-import {
-  withLabelWidget,
-} from "../aria-attributes-widgets/aria-label/with";
+import { withLabelWidget } from "../aria-attributes-widgets/aria-label/with";
 import { withoutLabelWidget } from "../aria-attributes-widgets/aria-label/without";
+import { WithAriaHiddenWidget } from "../aria-attributes-widgets/aria-hidden/with";
+import { WithoutAriaHiddenWidget } from "../aria-attributes-widgets/aria-hidden/without";
+import { withAriaExpandedWidget } from "../aria-attributes-widgets/aria-expanded/with";
+import { withoutAriaExpandedWidget } from "../aria-attributes-widgets/aria-expanded/without";
+import { withAriaRquiredWidget } from "../aria-attributes-widgets/aria-required/with";
+import { withoutAriaRquiredWidget } from "../aria-attributes-widgets/aria-required/without";
+import { withAriaDisabledWidget } from "../aria-attributes-widgets/aria-disabled/with";
+import { withoutAriaDisabledWidget } from "../aria-attributes-widgets/aria-disabled/without";
+import { withAriaLiveWidget } from "../aria-attributes-widgets/aria-live/with";
+import { withoutAriaLiveWidget } from "../aria-attributes-widgets/aria-live/without";
+import { WithAriaInvalidWidget } from "../aria-attributes-widgets/aria-invalid/with";
+import { WithoutAriaInvalidWidget } from "../aria-attributes-widgets/aria-invalid/without";
 
 export const ariaAttributesContent: AriaAttributesContentType = {
   en: [
@@ -74,22 +83,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Helps reduce noise and improve the experience for screen reader users by hiding non-essential content.",
       example: {
         withAttribute: {
-          code: '<button>\n  Save\n  <span aria-hidden="true">💾</span>\n</button>',
-          widget: (
-            <button className="px-4 py-2 bg-blue-500 text-white rounded flex items-center gap-2">
-              Save
-              <span aria-hidden="true">💾</span>
-            </button>
-          ),
+          ...WithAriaHiddenWidget,
         },
         withoutAttribute: {
-          code: "<button>\n  Save\n  <span>💾</span>\n</button>",
-          widget: (
-            <button className="px-4 py-2 bg-blue-500 text-white rounded flex items-center gap-2">
-              Save
-              <span>💾</span>
-            </button>
-          ),
+          ...WithoutAriaHiddenWidget,
         },
       },
     },
@@ -103,23 +100,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Helps users understand the current state of interactive elements and what will happen when they interact with them.",
       example: {
         withAttribute: {
-          code: '<button aria-expanded="false">\n  Show details\n</button>',
-          widget: (
-            <button
-              aria-expanded="false"
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Show details
-            </button>
-          ),
+          ...withAriaExpandedWidget,
         },
         withoutAttribute: {
-          code: "<button>\n  Show details\n</button>",
-          widget: (
-            <button className="px-4 py-2 bg-blue-500 text-white rounded">
-              Show details
-            </button>
-          ),
+          ...withoutAriaExpandedWidget,
         },
       },
     },
@@ -132,31 +116,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Ensures users know which fields are mandatory without relying solely on visual indicators.",
       example: {
         withAttribute: {
-          code: '<label for="name">Name</label>\n<input type="text" id="name" aria-required="true" />',
-          widget: (
-            <div className="space-y-1">
-              <label htmlFor="name" className="block">
-                Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                aria-required="true"
-                className="border p-2 rounded"
-              />
-            </div>
-          ),
+          ...withAriaRquiredWidget,
         },
         withoutAttribute: {
-          code: '<label for="name">Name</label>\n<input type="text" id="name" />',
-          widget: (
-            <div className="space-y-1">
-              <label htmlFor="name" className="block">
-                Name
-              </label>
-              <input id="name" type="text" className="border p-2 rounded" />
-            </div>
-          ),
+          ...withoutAriaRquiredWidget,
         },
       },
     },
@@ -170,23 +133,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Helps users understand when elements are not interactive, even if they appear clickable or editable.",
       example: {
         withAttribute: {
-          code: '<button aria-disabled="true">\n  Submit form\n</button>',
-          widget: (
-            <button
-              aria-disabled="true"
-              className="px-4 py-2 bg-gray-400 text-white rounded cursor-not-allowed"
-            >
-              Submit form
-            </button>
-          ),
+          ...withAriaDisabledWidget,
         },
         withoutAttribute: {
-          code: "<button>\n  Submit form\n</button>",
-          widget: (
-            <button className="px-4 py-2 bg-blue-500 text-white rounded">
-              Submit form
-            </button>
-          ),
+          ...withoutAriaDisabledWidget,
         },
       },
     },
@@ -199,18 +149,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Ensures users are aware of important changes to the content without having to navigate to find them.",
       example: {
         withAttribute: {
-          code: '<div aria-live="polite">\n  Loading results...\n</div>',
-          widget: (
-            <div aria-live="polite" className="p-4 bg-blue-100 rounded">
-              Loading results...
-            </div>
-          ),
+          ...withAriaLiveWidget,
         },
         withoutAttribute: {
-          code: "<div>\n  Loading results...\n</div>",
-          widget: (
-            <div className="p-4 bg-blue-100 rounded">Loading results...</div>
-          ),
+          ...withoutAriaLiveWidget,
         },
       },
     },
@@ -224,12 +166,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Ensures users can understand the current state of selectable elements, particularly when custom controls are used.",
       example: {
         withAttribute: {
-          code: '<div role="checkbox" aria-checked="true">\n  <span>✓</span> Enable notifications\n</div>',
-          widget: <CondimentSelector />,
+          ...withAriaCheckedWidget,
         },
         withoutAttribute: {
-          code: "<div>\n  <span>✓</span> Enable notifications\n</div>",
-          widget: <CondimentSelectorWithout />,
+          ...withoutAriaCheckedWidget,
         },
       },
     },
@@ -243,34 +183,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Helps users identify and correct input errors, especially crucial for screen reader users.",
       example: {
         withAttribute: {
-          code: '<input\n  type="email"\n  aria-invalid="true"\n  aria-describedby="error-msg"\n/>\n<div id="error-msg">Please enter a valid email</div>',
-          widget: (
-            <div className="space-y-2">
-              <input
-                type="email"
-                aria-invalid="true"
-                aria-describedby="error-msg"
-                className="border-2 border-red-500 p-2 rounded"
-              />
-              <div id="error-msg" className="text-red-500 text-sm">
-                Please enter a valid email
-              </div>
-            </div>
-          ),
+          ...WithAriaInvalidWidget,
         },
         withoutAttribute: {
-          code: '<input type="email"/>\n<div>Please enter a valid email</div>',
-          widget: (
-            <div className="space-y-2">
-              <input
-                type="email"
-                className="border-2 border-red-500 p-2 rounded"
-              />
-              <div className="text-red-500 text-sm">
-                Please enter a valid email
-              </div>
-            </div>
-          ),
+          ...WithoutAriaInvalidWidget,
         },
       },
     },
@@ -286,23 +202,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Fundamental para que los usuarios de lectores de pantalla comprendan el propósito de los elementos sin etiquetas visibles.",
       example: {
         withAttribute: {
-          code: '<button aria-label="Cerrar diálogo">\n  <svg>...</svg>\n</button>',
-          widget: (
-            <button
-              aria-label="Cerrar diálogo"
-              className="p-2 rounded-full bg-gray-200 hover:bg-gray-300"
-            >
-              ✕
-            </button>
-          ),
+          ...withLabelWidget,
         },
         withoutAttribute: {
-          code: "<button>\n  <svg>...</svg>\n</button>",
-          widget: (
-            <button className="p-2 rounded-full bg-gray-200 hover:bg-gray-300">
-              ✕
-            </button>
-          ),
+          ...withoutLabelWidget,
         },
       },
     },
@@ -316,31 +219,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Permite la reutilización de texto visible como etiquetas y mantiene relaciones adecuadas entre los elementos y sus etiquetas.",
       example: {
         withAttribute: {
-          code: '<h2 id="profile-heading">Perfil de Usuario</h2>\n<section aria-labelledby="profile-heading">\n  <!-- Contenido del perfil -->\n</section>',
-          widget: (
-            <div>
-              <h2 id="profile-heading" className="font-bold">
-                Perfil de Usuario
-              </h2>
-              <section
-                aria-labelledby="profile-heading"
-                className="p-4 bg-gray-100 rounded"
-              >
-                Contenido del perfil
-              </section>
-            </div>
-          ),
+          ...withLabelledByWidget,
         },
         withoutAttribute: {
-          code: "<h2>Perfil de Usuario</h2>\n<section>\n  <!-- Contenido del perfil -->\n</section>",
-          widget: (
-            <div>
-              <h2 className="font-bold">Perfil de Usuario</h2>
-              <section className="p-4 bg-gray-100 rounded">
-                Contenido del perfil
-              </section>
-            </div>
-          ),
+          ...withoutLabelledByWidget,
         },
       },
     },
@@ -354,30 +236,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Asegura que los usuarios reciban información contextual importante sobre los elementos, especialmente crucial para validación de formularios e interacciones complejas.",
       example: {
         withAttribute: {
-          code: '<input type="password" aria-describedby="password-help"/>\n<div id="password-help">Debe tener al menos 8 caracteres</div>',
-          widget: (
-            <div className="space-y-2">
-              <input
-                type="password"
-                aria-describedby="password-help"
-                className="border p-2 rounded"
-              />
-              <div id="password-help" className="text-sm text-gray-600">
-                Debe tener al menos 8 caracteres
-              </div>
-            </div>
-          ),
+          ...withDescribedByWidget,
         },
         withoutAttribute: {
-          code: '<input type="password"/>\n<div>Debe tener al menos 8 caracteres</div>',
-          widget: (
-            <div className="space-y-2">
-              <input type="password" className="border p-2 rounded" />
-              <div className="text-sm text-gray-600">
-                Debe tener al menos 8 caracteres
-              </div>
-            </div>
-          ),
+          ...withoutDescribedByWidget,
         },
       },
     },
@@ -391,22 +253,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Ayuda a reducir el ruido y mejorar la experiencia para los usuarios de lectores de pantalla ocultando contenido no esencial.",
       example: {
         withAttribute: {
-          code: '<button>\n  Guardar\n  <span aria-hidden="true">💾</span>\n</button>',
-          widget: (
-            <button className="px-4 py-2 bg-blue-500 text-white rounded flex items-center gap-2">
-              Guardar
-              <span aria-hidden="true">💾</span>
-            </button>
-          ),
+          ...WithAriaHiddenWidget,
         },
         withoutAttribute: {
-          code: "<button>\n  Guardar\n  <span>💾</span>\n</button>",
-          widget: (
-            <button className="px-4 py-2 bg-blue-500 text-white rounded flex items-center gap-2">
-              Guardar
-              <span>💾</span>
-            </button>
-          ),
+          ...WithoutAriaHiddenWidget,
         },
       },
     },
@@ -420,23 +270,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Ayuda a los usuarios a entender el estado actual de los elementos interactivos y qué sucederá cuando interactúen con ellos.",
       example: {
         withAttribute: {
-          code: '<button aria-expanded="false">\n  Mostrar detalles\n</button>',
-          widget: (
-            <button
-              aria-expanded="false"
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Mostrar detalles
-            </button>
-          ),
+          ...withAriaExpandedWidget,
         },
         withoutAttribute: {
-          code: "<button>\n  Mostrar detalles\n</button>",
-          widget: (
-            <button className="px-4 py-2 bg-blue-500 text-white rounded">
-              Mostrar detalles
-            </button>
-          ),
+          ...withoutAriaExpandedWidget,
         },
       },
     },
@@ -450,31 +287,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Asegura que los usuarios sepan qué campos son obligatorios sin depender únicamente de indicadores visuales.",
       example: {
         withAttribute: {
-          code: '<label for="name">Nombre</label>\n<input type="text" id="name" aria-required="true" />',
-          widget: (
-            <div className="space-y-1">
-              <label htmlFor="name" className="block">
-                Nombre
-              </label>
-              <input
-                id="name"
-                type="text"
-                aria-required="true"
-                className="border p-2 rounded"
-              />
-            </div>
-          ),
+          ...withAriaRquiredWidget,
         },
         withoutAttribute: {
-          code: '<label for="name">Nombre</label>\n<input type="text" id="name" />',
-          widget: (
-            <div className="space-y-1">
-              <label htmlFor="name" className="block">
-                Nombre
-              </label>
-              <input id="name" type="text" className="border p-2 rounded" />
-            </div>
-          ),
+          ...withoutAriaRquiredWidget,
         },
       },
     },
@@ -488,23 +304,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Ayuda a los usuarios a entender cuándo los elementos no son interactivos, incluso si parecen clicables o editables.",
       example: {
         withAttribute: {
-          code: '<button aria-disabled="true">\n  Enviar formulario\n</button>',
-          widget: (
-            <button
-              aria-disabled="true"
-              className="px-4 py-2 bg-gray-400 text-white rounded cursor-not-allowed"
-            >
-              Enviar formulario
-            </button>
-          ),
+          ...withAriaDisabledWidget,
         },
         withoutAttribute: {
-          code: "<button>\n  Enviar formulario\n</button>",
-          widget: (
-            <button className="px-4 py-2 bg-blue-500 text-white rounded">
-              Enviar formulario
-            </button>
-          ),
+          ...withoutAriaDisabledWidget,
         },
       },
     },
@@ -518,20 +321,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Asegura que los usuarios estén al tanto de cambios importantes en el contenido sin tener que navegar para encontrarlos.",
       example: {
         withAttribute: {
-          code: '<div aria-live="polite">\n  Cargando resultados...\n</div>',
-          widget: (
-            <div aria-live="polite" className="p-4 bg-blue-100 rounded">
-              Cargando resultados...
-            </div>
-          ),
+          ...withAriaLiveWidget,
         },
         withoutAttribute: {
-          code: "<div>\n  Cargando resultados...\n</div>",
-          widget: (
-            <div className="p-4 bg-blue-100 rounded">
-              Cargando resultados...
-            </div>
-          ),
+          ...withoutAriaLiveWidget,
         },
       },
     },
@@ -545,26 +338,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Asegura que los usuarios puedan entender el estado actual de los elementos seleccionables, particularmente cuando se utilizan controles personalizados.",
       example: {
         withAttribute: {
-          code: '<div role="checkbox" aria-checked="true">\n  <span>✓</span> Habilitar notificaciones\n</div>',
-          widget: (
-            <div
-              role="checkbox"
-              aria-checked="true"
-              className="flex items-center gap-2 p-2 bg-blue-500 text-white rounded w-fit"
-            >
-              <span>✓</span>
-              Habilitar notificaciones
-            </div>
-          ),
+          ...withAriaCheckedWidget,
         },
         withoutAttribute: {
-          code: "<div>\n  <span>✓</span> Habilitar notificaciones\n</div>",
-          widget: (
-            <div className="flex items-center gap-2 p-2 bg-blue-500 text-white rounded w-fit">
-              <span>✓</span>
-              Habilitar notificaciones
-            </div>
-          ),
+          ...withoutAriaCheckedWidget,
         },
       },
     },
@@ -578,34 +355,10 @@ export const ariaAttributesContent: AriaAttributesContentType = {
         "Ayuda a los usuarios a identificar y corregir errores de entrada, especialmente crucial para los usuarios de lectores de pantalla.",
       example: {
         withAttribute: {
-          code: '<input\n  type="email"\n  aria-invalid="true"\n  aria-describedby="error-msg"\n/>\n<div id="error-msg">Por favor, introduce un correo electrónico válido</div>',
-          widget: (
-            <div className="space-y-2">
-              <input
-                type="email"
-                aria-invalid="true"
-                aria-describedby="error-msg"
-                className="border-2 border-red-500 p-2 rounded"
-              />
-              <div id="error-msg" className="text-red-500 text-sm">
-                Por favor, introduce un correo electrónico válido
-              </div>
-            </div>
-          ),
+          ...WithAriaInvalidWidget,
         },
         withoutAttribute: {
-          code: '<input type="email"/>\n<div>Por favor, introduce un correo electrónico válido</div>',
-          widget: (
-            <div className="space-y-2">
-              <input
-                type="email"
-                className="border-2 border-red-500 p-2 rounded"
-              />
-              <div className="text-red-500 text-sm">
-                Por favor, introduce un correo electrónico válido
-              </div>
-            </div>
-          ),
+          ...WithoutAriaInvalidWidget,
         },
       },
     },

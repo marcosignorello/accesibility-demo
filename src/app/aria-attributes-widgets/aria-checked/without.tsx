@@ -1,4 +1,8 @@
+import { useLanguage } from "@/app/languange.context";
 import React from "react";
+import { translations } from "./translations";
+import { CodeAccordion } from "../components/codeAccordion";
+import { AriaWidget } from "../types";
 
 const CustomCheckbox: React.FC<{ label: string }> = ({ label }) => {
   const [checked, setChecked] = React.useState(false);
@@ -9,52 +13,94 @@ const CustomCheckbox: React.FC<{ label: string }> = ({ label }) => {
     }
   };
 
+  const handleClick = () => {
+    setChecked(!checked);
+  };
+
   return (
-    <div className="flex items-center">
-      <input
-        id="link-checkbox"
-        type="checkbox"
-        value=""
-        onKeyDown={handleKeyPress}
-        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-      />
-      <label
-        aria-labelledby="link-checkbox"
-        className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+    <div
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={handleKeyPress}
+      className="flex items-center cursor-pointer"
+    >
+      <div
+        className={`w-4 h-4 border rounded-sm ${
+          checked
+            ? "bg-blue-600 border-blue-600"
+            : "bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+        }`}
       >
+        {checked && (
+          <svg
+            className="w-4 h-4 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        )}
+      </div>
+      <span className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
         {label}
-      </label>
+      </span>
     </div>
   );
 };
 
-// Usage example
-export const CondimentSelector: React.FC = () => {
+const WithCondimentSelector: React.FC = () => {
+  const { language } = useLanguage();
+  const t = translations[language as keyof typeof translations];
+
   return (
     <>
-      <h3 id="id-group-label" className="text-xl font-semibold mb-4">
-        Sandwich Condiments
+      <h3 id="condiments-label" className="text-xl font-semibold mb-4">
+        {t.sandwichCondiments}
       </h3>
-      <div
-        role="group"
-        aria-labelledby="id-group-label"
-        className="w-full max-w-md"
-      >
+      <div className="w-full max-w-md">
         <ul className="space-y-2">
           <li>
-            <CustomCheckbox label="Lettuce" />
+            <CustomCheckbox label={t.lettuce} />
           </li>
           <li>
-            <CustomCheckbox label="Tomato" />
+            <CustomCheckbox label={t.tomato} />
           </li>
           <li>
-            <CustomCheckbox label="Mustard" />
+            <CustomCheckbox label={t.mustard} />
           </li>
           <li>
-            <CustomCheckbox label="Sprouts" />
+            <CustomCheckbox label={t.sprouts} />
           </li>
         </ul>
       </div>
     </>
   );
+};
+
+export const withoutAriaCheckedWidget: AriaWidget = {
+  code: (
+    <CodeAccordion
+      code={`
+<div role="group" aria-labelledby="condiments-label">
+  <h3 id="condiments-label">Select your sandwich condiments</h3>
+  <div 
+    onClick={() => {}}
+    onKeyDown={(e) => {
+      if (e.key === " " || e.key === "Enter") {
+        // Toggle checkbox
+      }
+    }}
+  >
+    <span>Lettuce</span>
+  </div>
+</div>`}
+    />
+  ),
+  widget: <WithCondimentSelector />,
 };
