@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 type Example = {
-  code: string;
+  code: ReactNode | string;
   widget: ReactNode;
 };
 
@@ -10,11 +10,13 @@ export type AriaAttribute = {
   description: string;
   usedFor: string;
   importance: string;
-  example: Example;
+  example: {
+    withAttribute: Example;
+    withoutAttribute: Example;
+  };
 };
 
 export type AriaAttributesContentType = {
-  'en': AriaAttribute[];
-  'es': AriaAttribute[];
+  en: AriaAttribute[];
+  es: AriaAttribute[];
 };
-
