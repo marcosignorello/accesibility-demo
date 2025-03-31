@@ -11,7 +11,7 @@ const AriaDescribedByExample = () => {
   return (
     <div className="form-group">
       <label htmlFor="username">{t.usernameLabel}:</label>
-      <input type="text" id="username" aria-describedby="username-help" />
+      <input type="text" id="username" />
 
       <p id="username-help" className="help-text">
         {t.usernameHelp}
@@ -25,7 +25,7 @@ export const withoutDescribedByWidget: AriaWidget = {
     <CodeAccordion
       code={`<div className="form-group">
     <label htmlFor="username">Username:</label>
-    <input type="text" id="username" aria-describedby="username-help" />
+    <input type="text" id="username" />
 
     <p id="username-help" className="help-text">
       Username must be between 3-20 characters and contain only letters and

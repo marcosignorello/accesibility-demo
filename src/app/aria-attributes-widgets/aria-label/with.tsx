@@ -8,7 +8,6 @@ export const withLabel: React.JSX.Element = (
       type="search"
       aria-label="Search the website"
       className="w-full p-2 border rounded"
-      placeholder="Search..."
     />
   </div>
 );
@@ -21,7 +20,6 @@ export const withLabelWidget: AriaWidget = {
       type="search"
       aria-label="Search the website" 
       className="w-full p-2 border rounded"
-      placeholder="Search..."
     />
   </div>`}
     />
