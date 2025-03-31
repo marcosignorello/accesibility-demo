@@ -15,11 +15,11 @@ export const withLabel: React.JSX.Element = (
 export const withLabelWidget: AriaWidget = {
   code: (
     <CodeAccordion
-      code={`<div className="relative">
+      code={`
+  <div className="relative">
     <input
       type="search"
       aria-label="Search the website" 
-      className="w-full p-2 border rounded"
     />
   </div>`}
     />

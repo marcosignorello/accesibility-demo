@@ -15,7 +15,6 @@ export const withoutLabelWidget: AriaWidget = {
   <div className="relative">
     <input
       type="search"
-      className="w-full p-2 border rounded"
     />
   </div>`}
     />

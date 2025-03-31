@@ -9,7 +9,6 @@ const withoutLabelledBy: React.JSX.Element = (
     <input
       type="search"
       className="w-full p-2 border rounded"
-      placeholder="Search..."
     />
   </div>
 );
@@ -17,14 +16,13 @@ const withoutLabelledBy: React.JSX.Element = (
 export const withoutLabelledByWidget: AriaWidget = {
   code: (
     <CodeAccordion
-      code={`<div className="relative">
+      code={`
+  <div className="relative">
     <span id="search-label" >
       Search the website
     </span>
     <input
       type="search"
-      className="w-full p-2 border rounded"
-      placeholder="Search..."
     />
   </div>`}
     />
