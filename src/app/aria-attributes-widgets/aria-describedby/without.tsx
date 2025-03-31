@@ -9,27 +9,35 @@ const AriaDescribedByExample = () => {
   const t = translations[language as keyof typeof translations];
 
   return (
-    <div className="form-group">
-      <label htmlFor="username">{t.usernameLabel}:</label>
-      <input type="text" id="username" />
+    <div className="flex flex-col gap-2 p-4">
+    <label htmlFor="username" className="text-gray-700 font-medium">{t.usernameLabel}:</label>
+    <input 
+      type="text" 
+      id="username" 
+      className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
 
-      <p id="username-help" className="help-text">
-        {t.usernameHelp}
-      </p>
-    </div>
+    <p id="username-help" className="text-sm text-gray-600 mt-1">
+      {t.usernameHelp}
+    </p>
+  </div>
   );
 };
 
 export const withoutDescribedByWidget: AriaWidget = {
   code: (
     <CodeAccordion
-      code={`<div className="form-group">
-    <label htmlFor="username">Username:</label>
-    <input type="text" id="username" />
+      code={`
+  <div>
+    <label htmlFor="username">{t.usernameLabel}:</label>
+    <input 
+      type="text" 
+      id="username" 
+      aria-describedby="username-help"
+    />
 
-    <p id="username-help" className="help-text">
-      Username must be between 3-20 characters and contain only letters and
-      numbers
+    <p id="username-help">
+      {t.usernameHelp}
     </p>
   </div>`}
     />
