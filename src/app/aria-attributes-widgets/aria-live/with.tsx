@@ -31,14 +31,6 @@ const LiveRegionExample = () => {
       >
         Polite: {message}
       </div>
-      <div
-        aria-live="assertive"
-        aria-atomic="true"
-        role="alert"
-        className="mt-5 p-2.5 bg-gray-100 min-h-[50px]"
-      >
-        Assertive: {message}
-      </div>
     </div>
   );
 };
@@ -55,16 +47,8 @@ export const withAriaLiveWidget: AriaWidget = {
       </button>
       <div 
         aria-live="polite"
-        aria-atomic="true"
       >
         Polite: {message}
-      </div>
-      <div
-        aria-live="assertive" 
-        aria-atomic="true"
-        role="alert"
-      >
-        Assertive: {message}
       </div>
     </div>
     `}

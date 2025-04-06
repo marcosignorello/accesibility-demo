@@ -53,8 +53,8 @@ export const WithAriaInvalidWidget: AriaWidget = {
   code: (
     <CodeAccordion
       code={`
-    <div role="form"">
-      <label htmlFor="email-input"">
+    <div role="form">
+      <label htmlFor="email-input">
         {t.emailAddressLabel}
       </label>
       <input

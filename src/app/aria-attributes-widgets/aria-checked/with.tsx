@@ -97,7 +97,7 @@ export const withAriaCheckedWidget: AriaWidget = {
   <h3 id="condiments-label">Select your sandwich condiments</h3>
   <div 
     role="checkbox"
-    aria-checked="false"
+    aria-checked={checked}
     tabindex="0"
     onClick={() => {}}
     onKeyDown={(e) => {

@@ -38,7 +38,8 @@ const ExpandableWidget = () => {
 export const withAriaExpandedWidget: AriaWidget = {
   code: (
     <CodeAccordion
-      code={`<div className="p-4">
+      code={`
+    <div className="p-4">
       <button
         aria-expanded={isExpanded}
         aria-controls="content-panel"

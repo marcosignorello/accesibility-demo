@@ -27,12 +27,7 @@ const LiveRegionExample = () => {
       <div
         className="mt-5 p-2.5 bg-gray-100 min-h-[50px]"
       >
-        {message}
-      </div>
-      <div
-        className="mt-5 p-2.5 bg-gray-100 min-h-[50px]"
-      >
-        {message}
+        Polite: {message}
       </div>
     </div>
   );
@@ -42,24 +37,14 @@ export const withoutAriaLiveWidget: AriaWidget = {
   code: (
     <CodeAccordion
       code={`
-    <div>
+    <div className="p-5 border border-gray-300 rounded">
       <button 
         onClick={updateMessage}
       >
         Trigger Live Region Update
       </button>
-      <div 
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        {message}
-      </div>
-      <div
-        aria-live="assertive" 
-        aria-atomic="true"
-        role="alert"
-      >
-        {message}
+      <div>
+        Polite: {message}
       </div>
     </div>
     `}
