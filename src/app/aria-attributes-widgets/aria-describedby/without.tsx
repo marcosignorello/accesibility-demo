@@ -10,10 +10,9 @@ const AriaDescribedByExample = () => {
 
   return (
     <div className="flex flex-col gap-2 p-4">
-    <label htmlFor="username" className="text-gray-700 font-medium">{t.usernameLabel}:</label>
+    <label className="text-gray-700 font-medium">{t.usernameLabel}:</label>
     <input 
       type="text" 
-      id="username" 
       className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
     />
 
@@ -29,10 +28,9 @@ export const withoutDescribedByWidget: AriaWidget = {
     <CodeAccordion
       code={`
   <div>
-    <label htmlFor="username">{t.usernameLabel}:</label>
+    <label>{t.usernameLabel}:</label>
     <input 
       type="text" 
-      id="username" 
       aria-describedby="username-help"
     />
     <p id="username-help">
