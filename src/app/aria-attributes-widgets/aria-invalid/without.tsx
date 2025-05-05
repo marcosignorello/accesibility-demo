@@ -52,7 +52,6 @@ export const WithoutAriaInvalidWidget: AriaWidget = {
     <div role="form">
       <label>{t.emailAddressLabel}</label>
       <input
-        type="email"
         value={value}
         onChange={handleChange}
       />

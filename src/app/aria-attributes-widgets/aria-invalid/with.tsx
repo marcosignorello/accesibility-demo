@@ -51,19 +51,16 @@ export const WithAriaInvalidWidget: AriaWidget = {
     <CodeAccordion
       code={`
     <div role="form">
-      <label htmlFor="email-input">
+      <label>
         {t.emailAddressLabel}
       </label>
       <input
-        id="email-input"
-        type="email"
         value={value}
         onChange={handleChange}
         aria-invalid={!isValid}
-        aria-describedby="email-error"
       />
       {!isValid && (
-        <span id="email-error" role="alert">
+        <span>
           {t.emailError}
         </span>
       )}
