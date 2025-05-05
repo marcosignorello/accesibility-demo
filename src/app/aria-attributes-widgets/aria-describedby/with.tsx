@@ -28,18 +28,17 @@ export const withDescribedByWidget: AriaWidget = {
   code: (
     <CodeAccordion
       code={`
-    <div>
-      <label htmlFor="username">{t.usernameLabel}:</label>
-      <input 
-        type="text" 
-        id="username" 
-        aria-describedby="username-help"
-      />
-
-      <p id="username-help">
-        {t.usernameHelp}
-      </p>
-    </div>`}
+      <div>
+        <label htmlFor="username">{t.usernameLabel}:</label>
+        <input 
+          type="text" 
+          id="username" 
+          aria-describedby="username-help"
+        />
+        <p id="username-help">
+          {t.usernameHelp}
+        </p>
+      </div>`}
     />
   ),
   widget: <AriaDescribedByExample />,

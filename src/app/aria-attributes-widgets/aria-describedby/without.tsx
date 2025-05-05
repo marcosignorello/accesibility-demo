@@ -35,7 +35,6 @@ export const withoutDescribedByWidget: AriaWidget = {
       id="username" 
       aria-describedby="username-help"
     />
-
     <p id="username-help">
       {t.usernameHelp}
     </p>

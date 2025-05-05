@@ -5,9 +5,8 @@ import { CodeAccordion } from "../components/codeAccordion";
 // New example widget using aria-labelledby
 export const withLabelledBy: React.JSX.Element = (
   <div className="relative">
-    <span id="search-label">Search the website</span>
+    <span id="search-label">Search</span>
     <input
-      type="search"
       aria-labelledby="search-label search-description"
       className="w-full p-2 border rounded"
     />
@@ -20,10 +19,9 @@ export const withLabelledByWidget: AriaWidget = {
       code={`
   <div className="relative">
     <span id="search-label" >
-      Search the website
+      Search
     </span>
     <input
-      type="search"
       aria-labelledby="search-label"
     />
   </div>`}

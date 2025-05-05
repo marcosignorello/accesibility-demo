@@ -51,8 +51,8 @@ export const withAriaExpandedWidget: AriaWidget = {
       <div
         id="content-panel"
       >
-        <p className="text-gray-800 mb-4">This is the expandable content section.</p>
-        <p className="text-gray-600">
+        <p>This is the expandable content section.</p>
+        <p>
           It is shown when the button is expanded and hidden when collapsed.
         </p>
       </div>
