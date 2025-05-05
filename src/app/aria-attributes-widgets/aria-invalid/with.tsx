@@ -25,23 +25,21 @@ export const ValidationExample: React.FC = () => {
 
   return (
     <div role="form" className="max-w-md mx-auto p-4">
-      <label htmlFor="email-input" className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-gray-700 mb-2">
         {t.emailAddressLabel}
       </label>
       <input
-        id="email-input"
         type="email"
         value={value}
         onChange={handleChange}
         aria-invalid={!isValid}
-        aria-describedby="email-error"
         className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
           ${!isValid 
             ? 'border-red-500 focus:ring-red-500' 
             : 'border-gray-300 focus:ring-blue-500'}`}
       />
       {!isValid && (
-        <span id="email-error" role="alert" className="mt-2 text-sm text-red-600">
+        <span className="mt-2 text-sm text-red-600">
           {t.emailError}
         </span>
       )}
