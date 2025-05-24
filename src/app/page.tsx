@@ -1,227 +1,52 @@
-"use client";
-import React, { useEffect, useState } from "react";
 import { translations as ariaAttributeDetails } from "./translations/ariaAttributeDetails";
-import { TranslationStrings } from "./types/Translations.type";
 import { AriaAttribute } from "./types/AriaAttributestypes";
 import { ariaAttributesContent } from "./translations/ariaAttributeContent";
-import { useLanguage } from "./languange.context";
+import { TranslationStrings } from "./types/Translations.type";
 
-const AriaGuide = () => {
-  const { language, setLanguage } = useLanguage();
-  const [selectedAttribute, setSelectedAttribute] = useState<AriaAttribute>(
-    ariaAttributesContent[language as keyof typeof ariaAttributesContent][0]
-  );
-  const [pageTranslations, setPageTranslations] = useState<TranslationStrings>(
-    ariaAttributeDetails[language]
-  );
-  const [attributes, setAttributes] = useState(
-    ariaAttributesContent[language as keyof typeof ariaAttributesContent] ?? []
-  );
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+// Import the new client component
+import AriaGuideClient from "./components/AriaGuideClient";
 
-  useEffect(() => {
-    setPageTranslations(ariaAttributeDetails[language]);
-    setAttributes(
-      ariaAttributesContent[language as keyof typeof ariaAttributesContent] ??
-        []
-    );
-  }, [language]);
+// LanguageProvider is assumed to be in layout.tsx or a similar higher-order component.
+// No "use client" here, this is a Server Component.
+
+export default function Page() {
+  // Determine a default language for initial server render.
+  // The actual language context will be managed by LanguageProvider and useLanguage on the client.
+  const initialLanguage = 'en'; // Default language for server-side pre-rendering
+
+  // Fetch initial data based on the default language
+  const initialAttributes: AriaAttribute[] = ariaAttributesContent[initialLanguage as keyof typeof ariaAttributesContent] ?? [];
+  const initialPageTranslations: TranslationStrings = ariaAttributeDetails[initialLanguage as keyof typeof ariaAttributeDetails];
   
-  const t = pageTranslations;
-  // Toggle sidebar function for mobile view
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  // Set an initial selected attribute. Ensure attributes exist.
+  const initialSelectedAttribute: AriaAttribute | undefined = initialAttributes.length > 0 ? initialAttributes[0] : undefined;
+
+  if (!initialSelectedAttribute) {
+    // This case should ideally not happen if 'en' (or default lang) always has attributes.
+    // Handle this gracefully, perhaps by logging an error or passing empty/default values
+    // that AriaGuideClient can handle by showing a "no data" message.
+    console.error(`No initial attributes found for language: ${initialLanguage}. AriaGuideClient might not render correctly.`);
+    // Depending on requirements, you could throw an error or try a fallback language.
+    // For now, we'll proceed, and AriaGuideClient will have to handle potentially undefined initialSelectedAttribute.
+    // However, the AriaGuideClient was designed to expect a selectedAttribute.
+    // Let's ensure we pass something valid or let it handle it.
+    // The client component has checks for empty attributes or missing selected attribute.
+  }
 
   return (
-    <main className="flex flex-col md:flex-row h-screen bg-gray-100 relative overflow-hidden">
-      {/* Mobile-specific header with menu button */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-white shadow-md">
-        <h1 className="text-xl font-bold text-gray-900">{t.title}</h1>
-        <button
-          onClick={toggleSidebar}
-          className="p-2 rounded-md bg-blue-700 text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          aria-expanded={sidebarOpen}
-          aria-controls="sidebar"
-          aria-label={sidebarOpen ? "Close menu" : "Open menu"}
-        >
-          {sidebarOpen ? "✕" : "☰"}
-        </button>
-      </div>
-
-      {/* Sidebar - transforms for mobile */}
-      <nav
-        id="sidebar"
-        className={`
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
-        md:translate-x-0
-        transition-transform duration-300 ease-in-out 
-        fixed md:relative top-0 left-0 
-        h-full w-full md:w-[30%] 
-        md:max-w-xs z-20 md:z-0
-        md:h-screen bg-white shadow-md 
-        overflow-y-auto flex flex-col
-        pt-16 md:pt-4
-      `}
-        aria-label="Attribute navigation"
-      >
-        <div className="p-4 flex-grow">
-          <h2 className="text-xl font-bold mb-4 hidden md:block text-gray-900">
-            {t.title}
-          </h2>
-          <ul className="space-y-2" role="list">
-            {attributes.map((attr) => (
-              <li key={attr.name} role="listitem">
-                <button
-                  onClick={() => {
-                    setSelectedAttribute(attr);
-                    if (window.innerWidth < 768) {
-                      setSidebarOpen(false);
-                    }
-                  }}
-                  className={`w-full text-left p-3 rounded cursor-pointer transition-colors ${
-                    selectedAttribute?.name === attr.name
-                      ? "bg-blue-700 text-white"
-                      : "hover:bg-gray-100 text-gray-900"
-                  }`}
-                  aria-current={
-                    selectedAttribute?.name === attr.name ? "page" : undefined
-                  }
-                >
-                  {attr.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Language selector at the bottom */}
-        <div className="p-4 border-t">
-          <label
-            htmlFor="language-select"
-            className="block text-sm font-medium text-gray-900 mb-2"
-          >
-            {t.languageSelector}
-          </label>
-          <select
-            id="language-select"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="w-full p-2 border rounded bg-white text-gray-900"
-            aria-label="Select language"
-          >
-            <option value="en">English</option>
-            <option value="es">Español</option>
-          </select>
-        </div>
-      </nav>
-
-      {/* Overlay to close sidebar when clicked outside on mobile */}
-      {sidebarOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
-          onClick={() => setSidebarOpen(false)}
-          role="presentation"
-        />
-      )}
-
-      {/* Main content area */}
-      <article className="flex-1 p-4 md:p-8 overflow-y-auto pt-4 md:pt-8">
-        <div className="space-y-6">
-          <h1 className="text-2xl font-bold text-gray-900">
-            {selectedAttribute.name}
-          </h1>
-
-          <section aria-labelledby="description-heading">
-            <h2
-              id="description-heading"
-              className="text-xl font-semibold mb-2 text-gray-900"
-            >
-              {t.description}
-            </h2>
-            <p className="text-gray-900 text-lg leading-relaxed">
-              {selectedAttribute.description}
-            </p>
-          </section>
-
-          <section aria-labelledby="usedfor-heading">
-            <h2
-              id="usedfor-heading"
-              className="text-xl font-semibold mb-2 text-gray-900"
-            >
-              {t.usedFor}
-            </h2>
-            <p className="text-gray-900 text-lg leading-relaxed">
-              {selectedAttribute.usedFor}
-            </p>
-          </section>
-
-          <section aria-labelledby="importance-heading">
-            <h2
-              id="importance-heading"
-              className="text-xl font-semibold mb-2 text-gray-900"
-            >
-              {t.importance}
-            </h2>
-            <p className="text-gray-900 text-lg leading-relaxed">
-              {selectedAttribute.importance}
-            </p>
-          </section>
-
-          <section aria-labelledby="example-heading">
-            <h2
-              id="example-heading"
-              className="text-xl font-semibold mb-2 text-gray-900"
-            >
-              {t.example}
-            </h2>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* With Attribute */}
-              <div className="border rounded-lg overflow-hidden bg-white">
-                <div className="bg-green-100 p-3 border-b">
-                  <h3 className="font-medium text-green-900">
-                    {t.withAttribute}
-                  </h3>
-                </div>
-                <div className="p-4">
-                  <pre
-                    className="bg-gray-800 text-white p-4 rounded overflow-x-auto mb-4 text-sm"
-                    role="code"
-                  >
-                    <code>{selectedAttribute.example.withAttribute.code}</code>
-                  </pre>
-                  <div className="p-4 border rounded bg-gray-50">
-                    {selectedAttribute.example.withAttribute.widget}
-                  </div>
-                </div>
-              </div>
-
-              {/* Without Attribute */}
-              <div className="border rounded-lg overflow-hidden bg-white">
-                <div className="bg-red-100 p-3 border-b">
-                  <h3 className="font-medium text-red-900">
-                    {t.withoutAttribute}
-                  </h3>
-                </div>
-                <div className="p-4">
-                  <pre
-                    className="bg-gray-800 text-white p-4 rounded overflow-x-auto mb-4 text-sm"
-                    role="code"
-                  >
-                    <code>
-                      {selectedAttribute.example.withoutAttribute.code}
-                    </code>
-                  </pre>
-                  <div className="p-4 border rounded bg-gray-50">
-                    {selectedAttribute.example.withoutAttribute.widget}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </article>
-    </main>
+    // The LanguageProvider would typically be in a layout file wrapping children.
+    // AriaGuideClient will use the useLanguage() hook, which relies on this provider.
+    <AriaGuideClient
+      initialAttributes={initialAttributes}
+      initialSelectedAttribute={initialSelectedAttribute!} // Asserting non-null based on typical data structure; client component should verify.
+      initialPageTranslations={initialPageTranslations}
+    />
   );
-};
+}
 
-export default AriaGuide;
+// Note: The 'ariaAttributesContent' might contain JSX elements (widgets).
+// When these are passed from a Server Component to a Client Component, Next.js handles
+// serialization as long as they are valid React elements or simple data.
+// If widgets are complex client components with their own state or effects,
+// this approach is generally fine. The server renders what it can (data structure),
+// and the client hydrates and takes over the interactive parts.
